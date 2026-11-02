@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Programa de Territorios</title>
+<style>
+:root{--bg:#f6f5f1;--sf:#fff;--tx:#1d2420;--mu:#66706a;--ac:#2f6b4f;--ac2:#e4efe9;--bd:#dcdad2;--no:#b4532a;--no2:#f7e3da;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141816;--sf:#1e2421;--tx:#e8ece9;--mu:#98a39c;--ac:#6fbf98;--ac2:#243b30;--bd:#33403a;--no:#e08a5e;--no2:#3d2a20;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141816;--sf:#1e2421;--tx:#e8ece9;--mu:#98a39c;--ac:#6fbf98;--ac2:#243b30;--bd:#33403a;--no:#e08a5e;--no2:#3d2a20;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--tx)}
+main,header,nav{max-width:1000px;margin:0 auto;padding:0 16px}
+header{padding-top:14px}h1{font-size:20px;margin:0}h2{font-size:17px;margin:18px 0 10px}h3,h4{margin:0;text-align:center}h3{font-size:16px}h4{font-size:14px;font-weight:600;margin-bottom:8px}
+nav{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:6px}
+button,input,select{font:inherit;color:inherit}
+nav button{border:1px solid var(--bd);background:var(--sf);padding:7px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+button{border:0;background:var(--ac);color:#fff;padding:7px 14px;border-radius:8px;cursor:pointer}
+button.g{background:var(--ac2);color:var(--ac)}button.x{background:transparent;color:var(--no);padding:4px 8px}
+input,select{border:1px solid var(--bd);background:var(--sf);border-radius:8px;padding:7px 9px;min-width:0}
+.row,.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:end;margin-bottom:12px}
+.row label{display:flex;flex-direction:column;font-size:12px;color:var(--mu);gap:2px}
+.mu{color:var(--mu)}.sc{overflow-x:auto}
+.list{list-style:none;margin:0;padding:0}.list li{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:8px 12px;margin-bottom:6px}
+table{border-collapse:collapse;width:100%;background:var(--sf)}
+th,td{border:1px solid var(--bd);padding:4px 6px;text-align:left}th{background:var(--ac2);color:var(--ac);font-size:13px}
+td input{width:100%;border:0;background:transparent;padding:4px;border-radius:4px}td input:focus{background:var(--ac2)}
+td.c,th.c{text-align:center}
+.c button{width:34px;padding:5px 0;background:var(--ac2);color:var(--ac)}.c button.no{background:var(--no2);color:var(--no)}
+.chip{display:inline-flex;gap:4px;align-items:center;border:1px solid var(--bd);border-radius:999px;padding:2px 10px;margin:2px;font-size:13px;background:var(--sf)}
+.dy button{padding:3px 8px;margin:1px;background:var(--bd);color:var(--mu);font-size:13px}.dy button.on{background:var(--ac);color:#fff}
+.wk{margin-bottom:26px}.pie{text-align:center;white-space:pre-line;font-style:italic;color:var(--mu);margin-top:10px}
+.nt{background:#d9d9d9;color:#000;font-weight:700;text-align:center;padding:10px;border:1px solid #000;margin-top:8px;white-space:pre-line}.vs{background:#5b9bd5;color:#000;text-align:center;padding:14px;border:1px solid #000;border-top:0}tr.gr td{background:#d9d9d9}tr.gr input{color:#000;font-weight:700}
+details{margin-top:28px}textarea{width:100%;min-height:90px;background:var(--sf);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px}
+@media screen and (max-width:640px){
+body{font-size:16px}
+main,header,nav{padding-left:12px;padding-right:12px}
+input,select,textarea{font-size:16px}
+button{padding:10px 14px}button.x{padding:8px 10px}
+.row>*,.bar>*{flex:1 1 100%}
+.row input,.row select,.bar input,.row button,.bar button{width:100%}
+.list li{flex-direction:column;align-items:flex-start;gap:6px}
+.list li form{width:100%;margin-left:0!important}.list li form input{flex:1}
+th,td{padding:4px 3px}
+.c button{width:100%;min-width:30px;padding:8px 0}
+table.rs,table.rs tbody{display:block}
+table.rs tr:first-child{display:none}
+table.rs tr{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 8px;border:1px solid var(--bd);border-radius:10px;margin-bottom:10px;padding:8px;background:var(--sf)}
+table.rs.pl tr{grid-template-columns:1fr 1fr}
+table.rs td{border:0;padding:0;display:flex;flex-direction:column;width:auto!important}
+table.rs td::before{content:attr(data-l);font-size:11px;color:var(--mu)}
+table.rs td[data-l=""]::before{display:none}
+table.rs td:nth-child(n+4){grid-column:1/-1}
+table.rs.pl td:nth-child(n+3){grid-column:1/-1}
+table.rs td input,table.rs td select{border:1px solid var(--bd);background:var(--sf);width:100%}
+table.rs tr.gr{background:#d9d9d9}table.rs tr.gr td{background:transparent}table.rs tr.gr td::before{color:#333}table.rs tr.gr td input{background:#fff}
+}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.np,nav,header{display:none!important}body{background:#fff;color:#000}.wk{page-break-after:always}th{background:#ddd;color:#000}td,th{border-color:#000}.pie{color:#000}input{color:#000}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></head><body>
+<header class="np"><h1>Programa de territorios</h1></header>
+<nav id="nav"></nav><main id="app"></main>
+<datalist id="dlT"></datalist><datalist id="dlB"></datalist>
+<script>
+const DL=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'],DS=['L','M','X','J','V','S','D'];
+const MES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const ORD=['Primera','Segunda','Tercera','Cuarta','Quinta','Sexta'];
+const $=s=>document.querySelector(s),uid=()=>Math.random().toString(36).slice(2,9);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pd=s=>{const[a,b,c]=s.split('-');return new Date(a,b-1,c)};
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const di=s=>(pd(s).getDay()+6)%7;
+const mon=s=>{const d=pd(s);d.setDate(d.getDate()-di(s));return iso(d)};
+const fmt=h=>{if(!h)return'-';const[a,b]=h.split(':').map(Number);return(a%12||12)+':'+String(b).padStart(2,'0')+(a<12?' a.m.':' p.m.')};
+const KEY='territorios2026';let S,T='prog',mk=iso(new Date()).slice(0,7);
+function seed(){
+ const n=[];
+ const t=[];
+ const sl=(d,h,s,t,e,m)=>({id:uid(),d,h,s:s||'',t:t||'',e:e||'',m:m||''});
+ return{b:n.map(x=>({id:uid(),n:x,r:1,no:[],fe:[]})),t:t.map(x=>({id:uid(),n:x,a:1,d:[]})),
+  s:[sl(1,'08:45','','Cartas y Mensajes','','✔'),sl(1,'15:30','','','','📌'),sl(2,'18:30','Zoom','-','','📌'),sl(3,'08:45','','','','📌'),sl(4,'08:45'),sl(4,'15:30'),
+   ...[1,2,3,4].map(i=>sl(5,'','Predicación Grupo #'+i,'-','Superintendente de Grupo')),sl(6,'10:45','Salón del Reino')],
+  e:[],p:{},pie:'Cada Superintendente de Grupo se hará cargo del horario y territorio de su propio grupo.\n“Y las buenas noticias del Reino se predicarán en toda la tierra habitada para testimonio a todas las naciones”\nMateo 24:14'}}
+try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!S)S=seed();
+const SL={};
+S.t.forEach(t=>{if(!t.sl)t.sl=[...(SL[t.n]||[])]});
+if(S.nota==null){const l=(S.pie||'').split('\n');S.nota=/^Cada /.test(l[0])?l.shift():'';S.pie=l.join('\n')}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const sv=()=>{save();render()};
+const ask=(b,f)=>{if(b.dataset.q)f();else{b.dataset.q=1;b.textContent='¿Seguro?';setTimeout(()=>{delete b.dataset.q;b.textContent='Eliminar'},3000)}};
+const del=(b,k,id)=>ask(b,()=>{S[k]=S[k].filter(x=>x.id!=id);sv()});
+const tgl=(a,v)=>{const i=a.indexOf(v);i<0?a.push(v):a.splice(i,1)};
+const bid=id=>S.b.find(b=>b.id==id);
+
+/* ---------- Hermanos ---------- */
+function vH(){return`<h2>Hermanos</h2><form class="row" onsubmit="addB(event)"><input id="nb" placeholder="Nombre del hermano" required><button>Agregar</button></form>
+<ul class="list">${S.b.map(b=>`<li><strong>${esc(b.n)}</strong><label><input type="checkbox" ${b.r?'checked':''} onchange="bid('${b.id}').r=this.checked?1:0;sv()"> Entra en la rotación</label><button class="x" onclick="del(this,'b','${b.id}')">Eliminar</button></li>`).join('')}</ul>
+<p class="mu">Si desmarcas “Entra en la rotación”, el hermano no se asigna automáticamente (pero puedes ponerlo a mano).</p>`}
+function addB(e){e.preventDefault();const n=$('#nb').value.trim();if(n){S.b.push({id:uid(),n,r:1,no:[],fe:[]});sv()}}
+
+/* ---------- Disponibilidad ---------- */
+function vD(){const fe=S.b.flatMap(b=>b.fe.map(f=>({b,f}))).sort((a,c)=>a.f.localeCompare(c.f));
+return`<h2>Disponibilidad por día</h2><p class="mu">✓ = puede ese día · ✕ = no puede (no se le asigna). El programa rota entre los que sí pueden, así no quedan siempre el mismo día.</p>
+<div class="sc"><table><tr><th>Hermano</th>${DL.map((d,i)=>`<th class="c" title="${d}">${DS[i]}</th>`).join('')}</tr>
+${S.b.map(b=>`<tr><td>${esc(b.n)}</td>${DL.map((d,i)=>{const n=b.no.includes(i);return`<td class="c"><button class="${n?'no':''}" onclick="tgl(bid('${b.id}').no,${i});sv()">${n?'✕':'✓'}</button></td>`}).join('')}</tr>`).join('')}</table></div>
+<h2>Fechas específicas no disponibles</h2>
+<form class="row" onsubmit="addF(event)"><label>Hermano<select id="fb">${S.b.map(b=>`<option value="${b.id}">${esc(b.n)}</option>`).join('')}</select></label><label>Fecha<input type="date" id="ff" required></label><button>Agregar</button></form>
+<ul class="list">${fe.map(x=>`<li><span>${esc(x.b.n)} — ${x.f.split('-').reverse().join('/')}</span><button class="x" onclick="tgl(bid('${x.b.id}').fe,'${x.f}');sv()">Quitar</button></li>`).join('')||'<li class="mu">Sin fechas bloqueadas.</li>'}</ul>`}
+function addF(e){e.preventDefault();const b=bid($('#fb').value),f=$('#ff').value;if(b&&f&&!b.fe.includes(f)){b.fe.push(f);sv()}}
+
+/* ---------- Territorios ---------- */
+function vT(){return`<h2>Territorios</h2><form class="row" onsubmit="addT(event)"><input id="nt" placeholder="Nombre del territorio" required><button>Agregar</button></form>
+<p class="mu">Días permitidos: si no marcas ninguno, el territorio puede tocar cualquier día. Los territorios rotan solos: se asigna el que lleva más tiempo sin usarse.</p>
+<ul class="list">${S.t.map(t=>`<li style="opacity:${t.a?1:.55}"><strong>${esc(t.n)}</strong><span class="dy">${DL.map((d,i)=>`<button class="${t.d.includes(i)?'on':''}" title="${d}" onclick="tgl(S.t.find(x=>x.id=='${t.id}').d,${i});sv()">${DS[i]}</button>`).join('')}</span>
+<label><input type="checkbox" ${t.a?'checked':''} onchange="S.t.find(x=>x.id=='${t.id}').a=this.checked?1:0;sv()"> Activo</label><button class="x" onclick="del(this,'t','${t.id}')">Eliminar</button>
+<div style="width:100%"><span class="mu">Lugares de salida:</span> ${(t.sl||[]).map((p,i)=>`<span class="chip">${esc(p)} <button class="x" onclick="S.t.find(x=>x.id=='${t.id}').sl.splice(${i},1);sv()">✕</button></span>`).join('')||'<span class="mu">ninguno</span>'}
+<form style="display:inline-flex;gap:6px;margin-left:6px" onsubmit="event.preventDefault();addSl('${t.id}',this.q.value)"><input name="q" placeholder="Ej. Familia Morales"><button class="g">Agregar</button></form></div></li>`).join('')}</ul>`}
+const addSl=(id,v)=>{v=v.trim();const t=S.t.find(x=>x.id==id);if(v&&t){(t.sl=t.sl||[]).push(v);sv()}};
+function addT(e){e.preventDefault();const n=$('#nt').value.trim();if(n){S.t.push({id:uid(),n,a:1,d:[],sl:[]});sv()}}
+
+/* ---------- Excepciones ---------- */
+function vE(){const L=[...S.e].sort((a,b)=>a.f.localeCompare(b.f));
+return`<h2>Excepciones y entradas manuales</h2><p class="mu">“Omitir” quita la salida de esa fecha (y hora, si la indicas). “Agregar manualmente” añade una fila extra al programa.</p>
+<form class="row" onsubmit="addE(event)"><label>Fecha<input type="date" id="ef" required></label><label>Hora (opcional)<input type="time" id="eh"></label>
+<label>Acción<select id="ek"><option value="o">Omitir predicación</option><option value="m">Agregar manualmente</option></select></label>
+<label>Motivo / actividad<input id="em" placeholder="Ej. Asamblea, Limpieza Profunda"></label>
+<label>Salida<input id="es" placeholder="Solo manual"></label><label>Territorio<input id="et" placeholder="Solo manual" list="dlT"></label><label>Encargado<input id="ee" placeholder="Solo manual" list="dlB"></label><button>Agregar</button></form>
+<ul class="list">${L.map(e=>`<li><span><strong>${e.f.split('-').reverse().join('/')}</strong> · ${e.h?fmt(e.h):'todo el día'} · ${e.k=='o'?'Omitir':'Manual'}${e.mo?': '+esc(e.mo):''}</span><button class="x" onclick="del(this,'e','${e.id}')">Eliminar</button></li>`).join('')||'<li class="mu">Sin excepciones.</li>'}</ul>`}
+function addE(ev){ev.preventDefault();const v=i=>$('#'+i).value.trim();S.e.push({id:uid(),f:v('ef'),h:v('eh'),k:v('ek'),mo:v('em'),sal:v('es'),t:v('et'),e:v('ee')});sv()}
+
+/* ---------- Plantilla semanal ---------- */
+const si=(id,k,v,ph,l)=>`<input value="${esc(v)}" placeholder="${ph}" ${l?'list="'+l+'"':''} oninput="S.s.find(x=>x.id=='${id}').${k}=this.value;save()">`;
+function vL(){return`<h2>Plantilla semanal</h2><p class="mu">Las salidas fijas de cada semana. Deja Territorio o Encargado vacío para que roten automáticamente; escribe “-” para dejarlo en blanco o un texto fijo (ej. Superintendente de Grupo).</p>
+<div class="sc"><table class="rs pl"><tr><th>Día</th><th>Hora</th><th>Salida</th><th>Territorio</th><th>Encargado</th><th></th></tr>
+${S.s.map(s=>`<tr><td><select onchange="S.s.find(x=>x.id=='${s.id}').d=+this.value;save()">${DL.map((d,i)=>`<option value="${i}" ${s.d==i?'selected':''}>${d}</option>`).join('')}</select></td>
+<td><input type="time" value="${s.h}" oninput="S.s.find(x=>x.id=='${s.id}').h=this.value;save()"></td><td>${si(s.id,'s',s.s,'(del territorio)')}</td><td>${si(s.id,'t',s.t,'(rotar)','dlT')}</td><td>${si(s.id,'e',s.e,'(rotar)','dlB')}</td>
+<td><button class="x" onclick="del(this,'s','${s.id}')">Eliminar</button></td></tr>`).join('')}</table></div>
+<p><button onclick="S.s.push({id:uid(),d:1,h:'',s:'',t:'',e:'',m:''});sv()">+ Agregar salida</button></p>
+<h2>Notas y versículo</h2><p class="mu">Aparecen al pie de cada semana (notas en gris, versículo en azul). La última línea del versículo va en negrita.</p>
+<label class="mu">Notas<textarea oninput="S.nota=this.value;save()">${esc(S.nota)}</textarea></label><label class="mu">Versículo<textarea oninput="S.pie=this.value;save()">${esc(S.pie)}</textarea></label>
+${vDL()}`}
+
+/* ---------- Programa ---------- */
+function gen(q){const[Y,M]=mk.split('-').map(Number);const cn={},tot={},lb={},lt={},ls={};let o=0;
+ const bump=r=>{const d=di(r.f);if(r.e){cn[r.e+d]=(cn[r.e+d]||0)+1;tot[r.e]=(tot[r.e]||0)+1;lb[r.e]=++o}if(r.t){lt[r.t]=++o;if(r.s)ls[r.t+'|'+r.s]=++o}};
+ Object.keys(S.p).filter(k=>k<mk).sort().forEach(k=>S.p[k].forEach(bump));
+ const sl=[...S.s].sort((a,b)=>a.d-b.d||(a.h||'99').localeCompare(b.h||'99')),out=[],wk=new Set();
+ let d=new Date(Y,M-1,1);d.setDate(d.getDate()-(d.getDay()+6)%7);
+ for(let w=0;w<6;w++){const tu=new Date(d);tu.setDate(tu.getDate()+1);
+  if(tu.getFullYear()==Y&&tu.getMonth()==M-1){wk.add(iso(d));const used={};
+   sl.forEach(s=>{const x=new Date(d);x.setDate(x.getDate()+s.d);const f=iso(x);
+    if(S.e.some(e=>e.k=='o'&&e.f==f&&(!e.h||e.h==s.h)))return;
+    const r={f,h:s.h,s:s.s,t:'',e:''};
+    if(s.e)r.e=s.e=='-'?'':s.e;
+    else{const c=S.b.filter(b=>b.r&&!b.no.includes(s.d)&&!b.fe.includes(f)&&!used[f+b.n]).sort((a,b)=>(cn[a.n+s.d]||0)-(cn[b.n+s.d]||0)||(tot[a.n]||0)-(tot[b.n]||0)||(lb[a.n]||0)-(lb[b.n]||0));r.e=c.length?c[0].n:'SIN ASIGNAR'}
+    used[f+r.e]=1;
+    if(s.t)r.t=s.t=='-'?'':s.t;
+    else{const c=S.t.filter(t=>t.a&&(!t.d.length||t.d.includes(s.d))).sort((a,b)=>(lt[a.n]||0)-(lt[b.n]||0));r.t=c.length?c[0].n:''}
+    if(!r.s&&r.t){const tt=S.t.find(t=>t.n==r.t);if(tt&&(tt.sl||[]).length)r.s=[...tt.sl].sort((a,b)=>(ls[r.t+'|'+a]||0)-(ls[r.t+'|'+b]||0))[0]}
+    bump(r);out.push(r)})}
+  d.setDate(d.getDate()+7)}
+ S.e.filter(e=>e.k=='m'&&wk.has(mon(e.f))).forEach(e=>out.push({f:e.f,h:e.h,s:e.sal||e.mo,t:e.t,e:e.e,m:''}));
+ S.p[mk]=out.sort((a,b)=>(a.f+(a.h||'99')).localeCompare(b.f+(b.h||'99')));q?save():sv()}
+const inp=(i,k,v,l)=>`<input value="${esc(v)}" ${l?'list="'+l+'"':''} onchange="S.p[mk][${i}].${k}=this.value;save()">`;
+function vP(){const R=S.p[mk]||[];
+ let h=`<div class="bar np"><label class="mu">Mes<br><input type="month" value="${mk}" onchange="if(this.value){mk=this.value;render()}"></label><button onclick="gen()">${R.length?'Regenerar mes':'Generar mes'}</button>${R.length?'<button class="g" onclick="print()">Imprimir</button>':''}</div>`;
+ if(!R.length)return h+'<p class="mu">Aún no hay programa para este mes. Pulsa “Generar mes”: se arma con los hermanos disponibles, los territorios y las excepciones. Después puedes editar cualquier celda.</p>';
+ const g={};R.forEach((r,i)=>(g[mon(r.f)]??=[]).push([r,i]));
+ Object.keys(g).sort().forEach((k,n)=>{h+=`<section class="wk"><h3>PROGRAMA DE PREDICACIÓN</h3><h4>${ORD[n]} Semana de ${MES[+mk.slice(5)-1]} ${mk.slice(0,4)}</h4><div class="sc"><table class="rs"><tr><th>DÍA</th><th>HORA</th><th>FECHA</th><th>SALIDA</th><th>TERRITORIO</th><th>ENCARGADO</th><th></th></tr>
+ ${g[k].map(([r,i])=>`<tr${/Grupo/.test(r.s+r.e)?' class="gr"':''}><td>${DL[di(r.f)]}</td><td>${fmt(r.h)}</td><td>${r.f.split('-').reverse().join('/')}</td><td>${inp(i,'s',r.s)}</td><td>${inp(i,'t',r.t,'dlT')}</td><td>${inp(i,'e',r.e,'dlB')}</td><td style="width:40px"><button class="x np" title="Quitar fila" onclick="S.p[mk].splice(${i},1);sv()">✕</button></td></tr>`).join('')}</table></div>${foot()}</section>`});
+ return h}
+
+/* ---------- Descargas (imagen / PDF) ---------- */
+const foot=()=>{const v=(S.pie||'').split('\n').filter(Boolean);return(S.nota?`<div class="nt">${esc(S.nota)}</div>`:'')+(v.length?`<div class="vs">${v.map((t,i)=>i==v.length-1?'<b>'+esc(t)+'</b>':esc(t)).join('<br>')}</div>`:'')};
+let rg=true;const prep=()=>{if(rg||!(S.p[mk]||[]).length)gen(1)};
+const run=async f=>{try{msg('Preparando…');if($('#pv'))$('#pv').innerHTML='';prep();await f()}catch(e){msg('Error: '+((e&&(e.code||e.message))||e))}};
+const vDL=()=>{const n=(S.p[mk]||[]).length;return`<h2>Descargar programa</h2><div class="bar"><label class="mu">Mes<br><input type="month" value="${mk}" onchange="if(this.value){mk=this.value;render()}"></label><button onclick="run(dlImg)">Descargar imagen (PNG)</button><button class="g" onclick="run(dlPdf)">Descargar PDF</button></div><label class="mu"><input type="checkbox" ${rg?'checked':''} onchange="rg=this.checked"> Armar el programa con los datos actuales antes de descargar (reemplaza lo editado a mano en Programa)</label><p class="mu" id="dm">El programa se arma solo con los hermanos, la disponibilidad, los territorios y las excepciones, con el estilo de tu Excel.</p><div id="pv"></div>`};
+function wkCanvas(sub,rows){
+ const cw=[11,12,13,28,40,28.5].map(v=>v*7),TW=cw.reduce((a,b)=>a+b),M=24,RH=28,W=TW+2*M;
+ const FN=(z,b)=>(b?'bold ':'')+z+'px Calibri,Carlito,"Segoe UI",Arial,sans-serif';
+ const pr=document.createElement('canvas').getContext('2d');
+ const wrap=(t,z,b,w)=>{pr.font=FN(z,b);const o=[];String(t||'').split('\n').forEach(p=>{let l='';p.split(' ').forEach(wd=>{const n=l?l+' '+wd:wd;if(pr.measureText(n).width>w&&l){o.push(l);l=wd}else l=n});o.push(l)});return o.filter(Boolean)};
+ const nl=wrap(S.nota,16,1,TW-30),vl=(S.pie||'').split('\n').filter(Boolean);
+ const nH=nl.length?nl.length*22+20:0,vH=vl.length?vl.length*24+28:0,H=M+82+RH*(rows.length+1)+nH+vH+M;
+ const c=document.createElement('canvas');c.width=W*2;c.height=H*2;const x=c.getContext('2d');x.scale(2,2);
+ const F=(z,b)=>x.font=FN(z,b);
+ x.fillStyle='#fff';x.fillRect(0,0,W,H);x.textAlign='center';x.textBaseline='middle';
+ let y=M,gr=0;
+ x.fillStyle='#0070C0';x.fillRect(M,y,TW,46);x.fillStyle='#000';F(26);x.fillText('PROGRAMA DE PREDICACIÓN',M+TW/2,y+23);y+=46;
+ x.fillStyle='#9DC3E6';x.fillRect(M,y,TW,36);x.fillStyle='#000';F(21,1);x.fillText(sub,M+TW/2,y+18);y+=36;
+ x.strokeStyle='#000';x.lineWidth=1;
+ const cell=(i,j,t,b)=>{const px=M+cw.slice(0,i).reduce((a,v)=>a+v,0),w=cw.slice(i,j+1).reduce((a,v)=>a+v,0);if(gr){x.fillStyle='#D9D9D9';x.fillRect(px,y,w,RH)}x.strokeRect(px,y,w,RH);x.fillStyle='#000';let z=16;F(z,b||gr);while(x.measureText(t).width>w-10&&z>9)F(--z,b||gr);x.fillText(t,px+w/2,y+RH/2+1)};
+ ['DÍA','HORA','FECHA','SALIDA','TERRITORIO','ENCARGADO'].forEach((t,i)=>cell(i,i,t,1));y+=RH;
+ rows.forEach(r=>{gr=/Grupo/.test((r.s||'')+(r.e||''))?1:0;[DL[di(r.f)],fmt(r.h),r.f.split('-').reverse().join('/')].forEach((t,i)=>cell(i,i,t));
+  if(r.t){cell(3,3,r.s);cell(4,4,r.t)}else cell(3,4,r.s);cell(5,5,r.e);y+=RH});
+ if(nl.length){x.fillStyle='#D9D9D9';x.fillRect(M,y,TW,nH);x.strokeRect(M,y,TW,nH);x.fillStyle='#000';F(16,1);nl.forEach((t,i)=>x.fillText(t,M+TW/2,y+21+i*22));y+=nH}
+ if(vl.length){x.fillStyle='#5B9BD5';x.fillRect(M,y,TW,vH);x.strokeRect(M,y,TW,vH);x.fillStyle='#000';vl.forEach((t,i)=>{F(17,i==vl.length-1);x.fillText(t,M+TW/2,y+26+i*24)});y+=vH}
+ x.lineWidth=3;x.strokeRect(M,M,TW,y-M);
+ return c}
+function weeks(){const g={};(S.p[mk]||[]).forEach(r=>(g[mon(r.f)]??=[]).push(r));return Object.keys(g).sort().map((k,n)=>[ORD[n]+' Semana de '+MES[+mk.slice(5)-1]+' '+mk.slice(0,4),g[k]])}
+const msg=t=>{const e=$('#dm');if(e)e.textContent=t};
+async function dlSave(fn,data){
+ let dl=null;try{dl=await window.claude?.use?.('downloads')}catch(e){}
+ if(dl){try{await dl.save({filename:fn,data});return msg('Listo: '+fn)}catch(e){if(e&&e.code=='declined')return msg('Descarga cancelada.')}}
+ const du=await new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result);f.readAsDataURL(data)});
+ $('#dm').innerHTML=`Descarga directa: <a href="${du}" download="${fn}" target="_blank" style="color:var(--ac);font-weight:600">toca aquí para guardar ${fn}</a>`;
+ if(fn.endsWith('.png'))$('#pv').innerHTML=`<img src="${du}" alt="Programa" style="max-width:100%;border:1px solid var(--bd)"><p class="mu">Si no se descarga, mantén presionada la imagen (o clic derecho) y elige Guardar imagen.</p>`;
+ try{const a=document.createElement('a');a.href=du;a.download=fn;document.body.appendChild(a);a.click();a.remove()}catch(e){}}
+async function dlImg(){const cs=weeks().map(([s,r])=>wkCanvas(s,r));if(!cs.length)return;const b=document.createElement('canvas');b.width=Math.max(...cs.map(c=>c.width));b.height=cs.reduce((a,c)=>a+c.height,0);const x=b.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,b.width,b.height);let y=0;cs.forEach(c=>{x.drawImage(c,0,y);y+=c.height});
+ dlSave('programa-predicacion-'+mk+'.png',await new Promise(r=>b.toBlob(r,'image/png')))}
+async function dlPdf(){const J=window.jspdf&&window.jspdf.jsPDF;if(!J)return msg('No se pudo cargar el generador de PDF.');const d=new J({orientation:'l',unit:'pt',format:'a4'}),pw=d.internal.pageSize.getWidth(),ph=d.internal.pageSize.getHeight();
+ weeks().forEach(([s,r],i)=>{const c=wkCanvas(s,r),k=Math.min((pw-40)/c.width,(ph-40)/c.height);if(i)d.addPage();d.addImage(c.toDataURL('image/png'),'PNG',(pw-c.width*k)/2,20,c.width*k,c.height*k)});
+ dlSave('programa-predicacion-'+mk+'.pdf',d.output('blob'))}
+
+/* ---------- Respaldo ---------- */
+const bk=`<details class="np"><summary>Respaldo de datos</summary><p class="mu">Los datos se guardan en este navegador. Para pasarlos a otro dispositivo, copia el texto y pégalo allá con “Cargar”.</p><textarea id="bk"></textarea><p><button class="g" onclick="$('#bk').value=JSON.stringify(S)">Mostrar datos</button> <button onclick="try{S=JSON.parse($('#bk').value);sv()}catch(e){alert('Datos no válidos')}">Cargar</button></p></details>`;
+
+const V={prog:vP,herm:vH,disp:vD,terr:vT,exc:vE,plan:vL},TABS=[['prog','Programa'],['herm','Hermanos'],['disp','Disponibilidad'],['terr','Territorios'],['exc','Excepciones'],['plan','Plantilla']];
+function render(){
+ $('#nav').innerHTML=TABS.map(([k,l])=>`<button class="${k==T?'on':''}" onclick="T='${k}';render()">${l}</button>`).join('');
+ $('#app').innerHTML=V[T]()+bk;
+ document.querySelectorAll('table.rs').forEach(t=>{const h=[...t.rows[0].cells].map(c=>c.textContent);[...t.rows].slice(1).forEach(r=>[...r.cells].forEach((c,i)=>c.dataset.l=h[i]||''))});
+ $('#dlT').innerHTML=S.t.map(t=>`<option value="${esc(t.n)}">`).join('');
+ $('#dlB').innerHTML=S.b.map(b=>`<option value="${esc(b.n)}">`).join('')}
+render();
+</script></body></html>
